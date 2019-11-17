@@ -11,7 +11,7 @@
     "sql",
     "functional"
   ],
-  "description": "",
+  "description": "A wrapper around sqlite3 in function programming style",
   "main": "index.js",
   "scripts": {
     "test": "node test"
