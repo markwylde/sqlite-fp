@@ -88,6 +88,7 @@ rowStream(function (error, forEachRow) {
 ### getAll -> sql -> connection -> (error, rows)
 ### getOne -> sql -> connection -> (error, row)
 ### getEach -> sql -> [parameters] -> connection -> (error, forEachRow -> (row))
+### batch -> sql -> [[parameters]] -> connection -> (error, result={lastId, changes})
 ### execute -> sql -> connection -> (error, connection)
 
 ## License
