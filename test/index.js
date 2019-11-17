@@ -6,6 +6,7 @@ const run = require('../run')
 const execute = require('../execute')
 const getAll = require('../getAll')
 const getOne = require('../getOne')
+const close = require('../close')
 
 test('connect', t => {
   t.plan(1)
@@ -106,7 +107,6 @@ test('getAll: one record', t => {
   })
 })
 
-
 test('getAll: multiple records', t => {
   t.plan(2)
 
@@ -135,7 +135,6 @@ test('getAll: multiple records', t => {
   })
 })
 
-
 test('getOne: incorrect sql', t => {
   t.plan(1)
 
@@ -151,10 +150,50 @@ test('getOne: no records', t => {
   t.plan(2)
 
   const connection = righto(connect, ':memory:')
-  const tableCreated = righto(getOne, `SELECT * FROM sqlite_master WHERE type='table'`, connection)
+  const tableCreated = righto(getOne, "SELECT * FROM sqlite_master WHERE type='table'", connection)
 
   tableCreated(function (error, row) {
     t.notOk(error)
-    t.notOk(row, null)
+    t.notOk(row)
+  })
+})
+
+test('getOne: multiple records', t => {
+  t.plan(2)
+
+  const connection = righto(connect, ':memory:')
+  const tableCreated = righto(execute, 'CREATE TABLE lorem (info TEXT)', connection)
+
+  const firstRecordInserted = righto(execute, `
+    INSERT INTO lorem (info) VALUES ('test1')
+  `, connection, righto.after(tableCreated))
+
+  const secondRecordInserted = righto(execute, `
+    INSERT INTO lorem (info) VALUES ('test2')
+  `, connection, righto.after(tableCreated))
+
+  const getRecords = righto(getOne,
+    'SELECT * FROM lorem', connection,
+    righto.after(firstRecordInserted, secondRecordInserted)
+  )
+
+  getRecords(function (error, row) {
+    t.notOk(error)
+    t.deepEqual(row, {
+      info: 'test1'
+    })
+  })
+})
+
+test('close: database', t => {
+  t.plan(2)
+
+  const connection = righto(connect, ':memory:')
+
+  const closedConnection = righto(close, connection, righto.after(connection))
+
+  closedConnection(function (error, result) {
+    t.notOk(error)
+    t.notOk(result)
   })
 })
