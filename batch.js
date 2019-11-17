@@ -1,5 +1,4 @@
 const righto = require('righto')  
-righto._debug = true;
 
 function insertRow (sql, listOfParameters, connection, callback) {
   const statement = connection.prepare(sql)
