@@ -90,6 +90,7 @@ rowStream(function (error, forEachRow) {
 ### getEach -> sql -> [parameters] -> connection -> (error, forEachRow -> (row))
 ### batch -> sql -> [[parameters]] -> connection -> (error, result={lastId, changes})
 ### execute -> sql -> connection -> (error, connection)
+### close -> connection -> (error)
 
 ## License
 This project is licensed under the terms of the MIT license.
