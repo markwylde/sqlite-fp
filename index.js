@@ -5,5 +5,6 @@ module.exports = {
   get: require('./get'),
   getAll: require('./getAll'),
   getOne: require('./getOne'),
-  run: require('./run')
+  run: require('./run'),
+  close: require('./close')
 }

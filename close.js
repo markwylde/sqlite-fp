@@ -1,5 +1,5 @@
-function execute (connection, callback) {
+function close (connection, callback) {
   connection.close(callback)
 }
 
-module.exports = execute
+module.exports = close
