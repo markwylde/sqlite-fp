@@ -1,8 +1,15 @@
 {
   "name": "sqlite-fp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
-    "sqlite", "sqlite3", "memory", "rdbms", "db", "database", "sql", "functional"
+    "sqlite",
+    "sqlite3",
+    "memory",
+    "rdbms",
+    "db",
+    "database",
+    "sql",
+    "functional"
   ],
   "description": "",
   "main": "index.js",
