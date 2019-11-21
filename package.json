@@ -12,6 +12,10 @@
     "functional"
   ],
   "description": "A wrapper around sqlite3 in function programming style",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markwylde/sqlite-fp.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "c8 -o /tmp node test"
