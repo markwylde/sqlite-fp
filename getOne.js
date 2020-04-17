@@ -1,15 +1,14 @@
-function getOne (sql, parameters, connection, callback) {
+function getOne (connection, sql, parameters, callback) {
   if (arguments.length === 3) {
-    callback = connection
-    connection = parameters
-    parameters = null
+    callback = parameters;
+    parameters = null;
   }
 
   if (!parameters) {
-    parameters = []
+    parameters = [];
   }
 
-  connection.get(sql, parameters, callback)
+  connection.get(sql, parameters, callback);
 }
 
-module.exports = getOne
+module.exports = getOne;

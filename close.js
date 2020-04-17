@@ -1,5 +1,5 @@
 function close (connection, callback) {
-  connection.close(callback)
+  connection.close(callback);
 }
 
-module.exports = close
+module.exports = close;
