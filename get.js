@@ -1,7 +1,6 @@
 function getAll (connection, sql, parameters, callback) {
   if (arguments.length === 3) {
-    callback = connection;
-    connection = parameters;
+    callback = parameters;
     parameters = null;
   }
 
