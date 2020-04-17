@@ -1,15 +1,15 @@
-function getAll (sql, parameters, connection, callback) {
+function getAll (connection, sql, parameters, callback) {
   if (arguments.length === 3) {
-    callback = connection
-    connection = parameters
-    parameters = null
+    callback = connection;
+    connection = parameters;
+    parameters = null;
   }
 
   if (!parameters) {
-    parameters = []
+    parameters = [];
   }
 
-  connection.all(sql, parameters, callback)
+  connection.all(sql, parameters, callback);
 }
 
-module.exports = getAll
+module.exports = getAll;

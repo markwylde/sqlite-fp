@@ -7,4 +7,4 @@ module.exports = {
   getOne: require('./getOne'),
   run: require('./run'),
   close: require('./close')
-}
+};

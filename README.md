@@ -22,9 +22,9 @@ const getAll = require('sqlite-fp/getAll')
 function getTestRecords (callback) {
   connect(':memory:', function (error, connection) {
     if (error) { return callback(error) }
-    execute('CREATE TABLE lorem (info TEXT)', connection, function (error, tableCreated) {
+    execute(connection, 'CREATE TABLE lorem (info TEXT)', function (error, tableCreated) {
       if (error) { return callback(error) }
-      getAll('SELECT * FROM test', connection, function (error, testResults) {
+      getAll(connection, 'SELECT * FROM test', function (error, testResults) {
         if (error) { return callback(error) }
         callback(null, testResults)
       })
@@ -48,8 +48,8 @@ const execute = require('sqlite-fp/execute')
 const getAll = require('sqlite-fp/getAll')
 
 const connection = righto(connect, ':memory:')
-const tableCreated = righto(execute, 'CREATE TABLE lorem (info TEXT)', connection)
-const testResults = righto(getAll, 'SELECT * FROM test', connection, righto.after(tableCreated))
+const tableCreated = righto(execute, connection, 'CREATE TABLE lorem (info TEXT)')
+const testResults = righto(getAll, connection, 'SELECT * FROM test', righto.after(tableCreated))
 
 testResults(function (error, results) {
   if (error) {
@@ -68,8 +68,8 @@ const execute = require('sqlite-fp/execute')
 const getEach = require('sqlite-fp/getEach')
 
 const connection = righto(connect, ':memory:')
-const tableCreated = righto(execute, 'CREATE TABLE lorem (info TEXT)', connection)
-const rowStream = righto(getEach, 'SELECT * FROM test', connection, righto.after(tableCreated))
+const tableCreated = righto(execute, connection, 'CREATE TABLE lorem (info TEXT)')
+const rowStream = righto(getEach, connection, 'SELECT * FROM test', righto.after(tableCreated))
 
 rowStream(function (error, forEachRow) {
   if (error) {
@@ -84,12 +84,12 @@ rowStream(function (error, forEachRow) {
 
 ## Functions signatures
 ### connect -> filename -> [mode] -> (error, connection)
-### run -> sql -> [parameters] -> connection -> (error, result={lastId, changes})
-### getAll -> sql -> connection -> (error, rows)
-### getOne -> sql -> connection -> (error, row)
-### getEach -> sql -> [parameters] -> connection -> (error, forEachRow -> (row))
-### batch -> sql -> [[parameters]] -> connection -> (error, result={lastId, changes})
-### execute -> sql -> connection -> (error, connection)
+### run -> connection -> sql -> [parameters] -> (error, result={lastId, changes})
+### getAll -> connection -> sql -> (error, rows)
+### getOne -> connection -> sql -> (error, row)
+### getEach -> connection -> sql -> [parameters] -> (error, forEachRow -> (row))
+### batch -> connection -> sql -> [[parameters]] -> (error, result={lastId, changes})
+### execute -> connection -> sql -> (error, connection)
 ### close -> connection -> (error)
 
 ## License

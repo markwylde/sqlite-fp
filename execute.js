@@ -1,5 +1,5 @@
-function execute (sql, connection, callback) {
-  connection.exec(sql, callback)
+function execute (connection, sql, callback) {
+  connection.exec(sql, callback);
 }
 
-module.exports = execute
+module.exports = execute;
