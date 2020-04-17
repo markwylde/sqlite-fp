@@ -12,8 +12,7 @@ function insertRow (connection, sql, listOfParameters, callback) {
 
 function batch (connection, sql, listOfParameters, callback) {
   if (arguments.length === 3) {
-    callback = connection;
-    connection = listOfParameters;
+    callback = listOfParameters;
     listOfParameters = null;
   }
 
