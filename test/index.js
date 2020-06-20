@@ -37,7 +37,25 @@ test('run', t => {
   const connection = righto(connect, ':memory:');
   const tableCreated = righto(run, connection, 'CREATE TABLE lorem (info TEXT)');
 
-  tableCreated(function (error) {
+  tableCreated(function (error, result) {
+    t.notOk(error);
+  });
+});
+
+test('run with changes and lastID', t => {
+  t.plan(2);
+
+  const connection = righto(connect, ':memory:');
+  const tableCreated = righto(run, connection, 'CREATE TABLE lorem (info TEXT)');
+  const recordInserted = righto(run, connection, `
+    INSERT INTO lorem (info) VALUES ('test')
+  `, righto.after(tableCreated));
+
+  recordInserted(function (error, result) {
+    t.deepEqual(result, {
+      lastID: 1,
+      changes: 1
+    });
     t.notOk(error);
   });
 });

@@ -13,8 +13,17 @@ function run (connection, sql, parameters, callback) {
       return callback(error);
     }
 
-    statement.run(parameters);
-    statement.finalize(callback);
+    statement.run(parameters, function (error) {
+      if (error) {
+        return callback(error);
+      }
+
+      callback(null, {
+        lastID: this.lastID,
+        changes: this.changes
+      });
+    });
+    statement.finalize();
   });
 }
 
