@@ -12,11 +12,7 @@ test('connect', t => {
   t.plan(1);
 
   connect(':memory:', function (_, db) {
-    t.deepEqual(db, {
-      open: false,
-      filename: ':memory:',
-      mode: 65542
-    });
+    t.equal(db.constructor.name, 'Database');
   });
 });
 
@@ -28,6 +24,17 @@ test('run: incorrect sql', t => {
 
   tableCreated(function (error, success) {
     t.equal(error.toString(), 'Error: SQLITE_ERROR: near "_WRONG": syntax error');
+  });
+});
+
+test('run statement error', t => {
+  t.plan(1);
+
+  const connection = righto(connect, ':memory:');
+  const tableCreated = righto(run, connection, 'CREATE TABLE lorem (info TEXT)', [1]);
+
+  tableCreated(function (error, success) {
+    t.equal(error.toString(), 'Error: SQLITE_RANGE: column index out of range');
   });
 });
 
